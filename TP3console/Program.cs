@@ -16,7 +16,9 @@ namespace TP3console
             //Exo2Q6();
             //Exo2Q7();
             //Exo2Q8();
-            Exo2Q9();
+            //Exo2Q9();
+            //AjouteUtilisateur();
+            ModificationLarmeeDesDouzeSinges();
         }
 
         public static void Exo2Q1()
@@ -124,8 +126,21 @@ namespace TP3console
         {
             using (var ctx = new FilmsDbContext())
             {
-                Utilisateur user = new Utilisateur(677, "Arthur", "arthur.lopes@etu.univ-smb.fr", "tUneMerdeMec",);
+                Utilisateur user = new Utilisateur(677, "Arthur", "arthur.lopes@etu.univ-smb.fr", "tUneMerdeMec");
+                ctx.Utilisateurs.Add(user);
+                ctx.SaveChanges();
+            }
+        }
 
+        public static void ModificationLarmeeDesDouzeSinges()
+        {
+            using (var ctx = new FilmsDbContext())
+            {
+                Film film = ctx.Films.Where(f => f.Nom == "L'armee des douze singes").FirstOrDefault();
+                film.Description = "L'armee des douze singes";
+                Categorie categorie = ctx.Categories.Where(c => c.Nom == "Drame").FirstOrDefault();
+                film.IdcategorieNavigation = categorie;
+                ctx.SaveChanges();
             }
         }
 

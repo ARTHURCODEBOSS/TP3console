@@ -9,13 +9,12 @@ namespace TP3console.Models.EntityFramework;
 [Table("utilisateur")]
 public partial class Utilisateur
 {
-    public Utilisateur(int idutilisateur, string login, string email, string pwd, ICollection<Avi> avis)
+    public Utilisateur(int idutilisateur, string login, string email, string pwd)
     {
         Idutilisateur = idutilisateur;
         Login = login;
         Email = email;
         Pwd = pwd;
-        Avis = avis;
     }
 
     [Key]
