@@ -7,6 +7,7 @@ namespace TP3console
     {
         static void Main(string[] args)
         {
+
             using (var ctx = new FilmsDbContext())
             {
                 //Chargement de la catégorie Action
