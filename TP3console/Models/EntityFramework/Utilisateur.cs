@@ -9,6 +9,15 @@ namespace TP3console.Models.EntityFramework;
 [Table("utilisateur")]
 public partial class Utilisateur
 {
+    public Utilisateur(int idutilisateur, string login, string email, string pwd, ICollection<Avi> avis)
+    {
+        Idutilisateur = idutilisateur;
+        Login = login;
+        Email = email;
+        Pwd = pwd;
+        Avis = avis;
+    }
+
     [Key]
     [Column("idutilisateur")]
     public int Idutilisateur { get; set; }
@@ -27,4 +36,6 @@ public partial class Utilisateur
 
     [InverseProperty("IdutilisateurNavigation")]
     public virtual ICollection<Avi> Avis { get; set; } = new List<Avi>();
+
+
 }
