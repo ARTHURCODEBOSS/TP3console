@@ -27,7 +27,7 @@ public partial class FilmsDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseLoggerFactory(MyLoggerFactory).EnableSensitiveDataLogging().UseNpgsql("Server=localhost;port=5432;Database=FilmsDB;uid=postgres; password=postgres;");
 
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     { 
         modelBuilder.Entity<Avi>(entity =>

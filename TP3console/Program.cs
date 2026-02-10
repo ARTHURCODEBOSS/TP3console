@@ -9,15 +9,16 @@ namespace TP3console
         {
             using (var ctx = new FilmsDbContext())
             {
-
-                Film titanic = ctx.Films.AsNoTracking().First(f => f.Nom.Contains("Titanic"));
-
-                titanic.Description = "Un bateau échoué. Date : " + DateTime.Now.ToString();
-
-                int nbchanges = ctx.SaveChanges();
-
-                Console.WriteLine("Nombre de changements : " + nbchanges);
-
+                //Chargement de la catégorie Action
+                Categorie categorieAction = ctx.Categories.First(c => c.Nom == "Action");
+                
+                Console.WriteLine("Categorie : " + categorieAction.Nom);
+                Console.WriteLine("Films : ");
+                //Chargement des films de la catégorie Action.
+                foreach (var film in categorieAction.Films) // lazy loading initiated
+                {
+                    Console.WriteLine(film.Nom);
+                }
             }
         }
     }
