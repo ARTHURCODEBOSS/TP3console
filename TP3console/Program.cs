@@ -143,7 +143,92 @@ namespace TP3console
                 ctx.SaveChanges();
             }
         }
+        public static void Exo3SupprimerFilm()
+        {
+            using (var ctx = new FilmsDbContext())
+            {
+                
+                var film = ctx.Films
+                    .Include(f => f.Avis)
+                    .FirstOrDefault(f => EF.Functions.ILike(f.Nom, "L'armee des douze singes"));
 
+                if (film != null)
+                {
+                    ctx.Avis.RemoveRange(film.Avis);
+
+                    ctx.Films.Remove(film);
+
+                    ctx.SaveChanges();
+                    Console.WriteLine($"Film '{film.Nom}' et ses avis supprimés.");
+                }
+                else
+                {
+                    Console.WriteLine("Film introuvable.");
+                }
+            }
+        }
+
+        public static void Exo3AjouterAvis()
+        {
+            using (var ctx = new FilmsDbContext())
+            {
+                var film = ctx.Films.FirstOrDefault(f => f.Nom.Contains("Pulp Fiction"));
+                var user = ctx.Utilisateurs.First();
+
+                if (film != null && user != null)
+                {
+                    var avis = new Avi
+                    {
+                        Idfilm = film.Idfilm,
+                        Idutilisateur = user.Idutilisateur,
+                        Note = 5,
+                        Commentaire = "Un classique absolu !"
+                    };
+
+                    
+                    ctx.Avis.Add(avis);
+                    ctx.SaveChanges();
+                    Console.WriteLine("Avis ajouté avec succès.");
+                }
+            }
+        }
+
+        public static void Exo3AjouterDeuxFilms()
+        {
+            using (var ctx = new FilmsDbContext())
+            {
+                var catDrame = ctx.Categories.FirstOrDefault(c => c.Nom == "Drame");
+
+                if (catDrame != null)
+                {
+                    var f1 = new Film
+                    {
+                        Nom = "La Ligne Verte",
+                        Description = "Un film émouvant",
+                        IdcategorieNavigation = catDrame
+                    };
+
+                    var f2 = new Film
+                    {
+                        Nom = "Forrest Gump",
+                        Description = "Cours Forrest !",
+                        IdcategorieNavigation = catDrame
+                    };
+
+                    ctx.Films.AddRange(f1, f2);
+
+                    try
+                    {
+                        ctx.SaveChanges();
+                        Console.WriteLine("2 films ajoutés dans Drame.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Erreur (Pense à exécuter le SQL de correction de séquence !) : " + ex.Message);
+                    }
+                }
+            }
+        }
 
     }
 }
